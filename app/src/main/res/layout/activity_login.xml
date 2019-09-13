@@ -8,12 +8,61 @@
 
     <ImageView
         android:id="@+id/imgWhats"
-        android:layout_width="200dp"
-        android:layout_height="163dp"
+        android:layout_width="@dimen/larguraLogo"
+        android:layout_height="@dimen/alturaLogo"
         android:background="@drawable/logo"
-        android:layout_marginLeft="100dp"
-
+        android:layout_marginStart="100dp"
         android:layout_marginTop="40dp"
+
+        />
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgWhats"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/digite_seu_nome" />
+
+    <EditText
+        android:id="@+id/edit55"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editName"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="15dp"
+        android:hint="+55"    />
+
+    <EditText
+        android:id="@+id/editDDD"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editName"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="15dp"
+        android:hint="DDD"
+
+        />
+    <EditText
+        android:id="@+id/editNumber"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editName"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="15dp"
+        android:hint="Digite seu numero..."
+
+        />
+    <Button
+        android:id="@+id/idButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editNumber"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/botao_cadastrar"
 
         />
 
