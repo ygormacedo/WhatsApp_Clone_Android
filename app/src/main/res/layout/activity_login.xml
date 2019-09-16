@@ -7,7 +7,7 @@
     tools:context=".Activity.LoginActivity">
 
     <ImageView
-        android:id="@+id/imgWhats"
+        android:id="@+id/imgWhatsLogin"
         android:layout_width="@dimen/larguraLogo"
         android:layout_height="@dimen/alturaLogo"
         android:background="@drawable/logo"
@@ -17,50 +17,55 @@
         />
 
     <EditText
-        android:id="@+id/editName"
+        android:id="@+id/editNameLogin"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imgWhats"
+        android:layout_below="@+id/imgWhatsLogin"
         android:layout_marginStart="60dp"
         android:layout_marginTop="20dp"
+        android:textColor="@color/whiteColor"
         android:hint="@string/digite_seu_nome" />
 
     <EditText
-        android:id="@+id/edit55"
+        android:id="@+id/edit55Login"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editName"
+        android:layout_below="@+id/editNameLogin"
         android:layout_marginStart="60dp"
         android:layout_marginTop="15dp"
+        android:textColor="@color/whiteColor"
         android:hint="+55"    />
 
     <EditText
-        android:id="@+id/editDDD"
-        android:layout_width="50dp"
+        android:id="@+id/editDDDLogin"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editName"
-        android:layout_marginStart="110dp"
+        android:layout_below="@+id/editNameLogin"
+        android:layout_marginStart="105dp"
         android:layout_marginTop="15dp"
-        android:hint="DDD"
+        android:textColor="@color/whiteColor"
+        android:hint="DDD.."
 
         />
     <EditText
-        android:id="@+id/editNumber"
+        android:id="@+id/editTelephone"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editName"
-        android:layout_marginStart="170dp"
+        android:layout_below="@+id/editNameLogin"
+        android:layout_marginStart="180dp"
         android:layout_marginTop="15dp"
+        android:textColor="@color/whiteColor"
         android:hint="Digite seu numero..."
 
         />
     <Button
-        android:id="@+id/idButton"
-        android:layout_width="fill_parent"
+        android:id="@+id/idButtonLogin"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editNumber"
+        android:layout_below="@+id/editTelephone"
         android:layout_marginTop="20dp"
         android:textSize="20dp"
+        android:layout_marginStart="60dp"
         android:background="@color/colorPrimaryDark"
         android:text="@string/botao_cadastrar"
 
