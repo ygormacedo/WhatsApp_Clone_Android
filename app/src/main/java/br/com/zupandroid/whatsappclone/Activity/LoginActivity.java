@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         setInfo();
-        Permissao.validaPermissoes(this,  permissoesNecessarias);
+        Permissao.validaPermissoes(1,this,  permissoesNecessarias);
 
     }
 
