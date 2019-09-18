@@ -1,8 +1,11 @@
 package br.com.zupandroid.whatsappclone.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
@@ -109,4 +112,32 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+
+    public void onRequestPermissonResult(int requestCode,String[] permissions, int[] grantResults){
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (int resultado : grantResults){
+
+             if ( resultado == PackageManager.PERMISSION_DENIED){
+                 alertaValidacaoPermisao();
+             }
+        }
+    }
+
+    private void alertaValidacaoPermisao(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Permissões negada!");
+        builder.setMessage("Para acessar o App, é necessario aceitar as permisões");
+
+        builder.setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }
