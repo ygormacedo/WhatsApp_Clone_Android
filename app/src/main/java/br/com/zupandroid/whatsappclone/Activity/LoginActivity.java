@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void onRequestPermissonResult(int requestCode,String[] permissions, int[] grantResults){
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         for (int resultado : grantResults){
@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
     private void alertaValidacaoPermisao(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Permissões negada!");
-        builder.setMessage("Para acessar o App, é necessario aceitar as permisões");
+        builder.setMessage("Para acessar o aplicativo é necessario aceitar as permisões");
 
         builder.setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
             @Override
