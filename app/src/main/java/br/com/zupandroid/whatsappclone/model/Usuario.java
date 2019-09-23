@@ -1,6 +1,7 @@
 package br.com.zupandroid.whatsappclone.model;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
 
 import br.com.zupandroid.whatsappclone.config.ConfiguracaoFirebase;
 
@@ -20,6 +21,7 @@ public class Usuario {
         referenciaFirebase.child("usuarios").child(getId()).setValue(this);
     }
 
+    @Exclude
     public String getId() {
         return id;
     }
@@ -43,7 +45,7 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @Exclude //@Exclude é usado para camuflar a senha ou determinado objeto abaixo dele.
     public String getPassword() {
         return password;
     }
