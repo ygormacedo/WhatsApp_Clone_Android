@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".Activity.CadastroUsuarioActivity">
+
+    <ImageView
+        android:id="@+id/logoImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/usuario1"
+
+        />
+
+    <EditText
+        android:id="@+id/userEmail"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nameUser"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/digite_seu_e_mail"
+
+        />
+
+    <EditText
+        android:id="@+id/userPassword"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userEmail"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/digite_sua_senha"
+
+        />
+
+    <EditText
+        android:id="@+id/nameUser"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logoImg"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/digite_seu_nome1"
+
+        />
+
+
+    <Button
+        android:id="@+id/userButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userPassword"
+        android:layout_marginStart="60dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/botao_cadastrar"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+
+        />
+</RelativeLayout>

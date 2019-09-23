@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">WhatsAppClone</string>
     <string name="digite_seu_nome">Digite seu nome...</string>
-    <string name="botao_cadastrar">cadastrar</string>
+    <string name="botao_logar">Logar</string>
     <string name="botao_validar">VALIDAR</string>
+    <string name="texto_cadastro">Não tem conta? Cadastre-se</string>
+    <string name="digite_seu_e_mail">Digite seu E-mail</string>
+    <string name="digite_seu_nome1">Digite seu nome</string>
+    <string name="digite_sua_senha">Digite sua senha</string>
+    <string name="botao_cadastrar">CADASTRAR</string>
 </resources>
