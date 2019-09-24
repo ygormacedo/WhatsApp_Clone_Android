@@ -22,6 +22,8 @@ import br.com.zupandroid.whatsappclone.R;
 import br.com.zupandroid.whatsappclone.config.ConfiguracaoFirebase;
 import br.com.zupandroid.whatsappclone.model.Usuario;
 
+import static br.com.zupandroid.whatsappclone.ValindandoCPF.ValidaCPF.isValidCPF;
+
 public class CadastroUsuarioActivity extends AppCompatActivity {
 
     private EditText name;
@@ -40,7 +42,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_usuario);
 
         setEdit();
-        cpfMask();
+//        cpfMask();
 
 
     }
@@ -62,13 +64,14 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 usuario.setEmail(email.getText().toString());
                 usuario.setPassword(password.getText().toString());
                 usuario.setCpf(cpfUser.getText().toString());
-                cadastrarUsuario();
 
-
+                if (isValidCPF(usuario.getCpf())){
+                    cadastrarUsuario();
+                }else {
+                    Toast.makeText(CadastroUsuarioActivity.this,"CPF Invalido", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
-
     }
 
     public void cadastrarUsuario() {
