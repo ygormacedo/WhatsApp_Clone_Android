@@ -55,7 +55,7 @@
         android:id="@+id/edit_Button_User"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edit_Password_user"
+        android:layout_below="@id/cpfId"
         android:layout_marginStart="60dp"
         android:background="@color/colorPrimaryDark"
         android:text="@string/botao_cadastrar"
@@ -68,11 +68,10 @@
         android:id="@+id/cpfId"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_Button_User"
+        android:layout_below="@+id/edit_Password_user"
         android:layout_marginStart="60dp"
         android:layout_marginTop="20dp"
         android:hint="@string/digite_seu_cpf"
-        android:paddingLeft="40dp"
 
         />
 </RelativeLayout>

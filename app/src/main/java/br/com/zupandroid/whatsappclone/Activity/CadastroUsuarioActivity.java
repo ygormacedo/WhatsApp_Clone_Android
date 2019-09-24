@@ -2,14 +2,11 @@ package br.com.zupandroid.whatsappclone.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,7 +14,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import br.com.zupandroid.whatsappclone.R;
 import br.com.zupandroid.whatsappclone.config.ConfiguracaoFirebase;
 import br.com.zupandroid.whatsappclone.model.Usuario;
@@ -42,9 +38,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_usuario);
 
         setEdit();
-//        cpfMask();
-
-
+        cpfMask();
     }
 
     public void setEdit() {
@@ -65,10 +59,13 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 usuario.setPassword(password.getText().toString());
                 usuario.setCpf(cpfUser.getText().toString());
 
+                usuario.setCpf(usuario.getCpf().replace("-", "").replace(".", ""));
                 if (isValidCPF(usuario.getCpf())){
+
+                    Toast.makeText(CadastroUsuarioActivity.this,"CPF OK !!!!!!",Toast.LENGTH_LONG).show();
                     cadastrarUsuario();
                 }else {
-                    Toast.makeText(CadastroUsuarioActivity.this,"CPF Invalido", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CadastroUsuarioActivity.this,"CPF Invalido", Toast.LENGTH_LONG).show();
                 }
             }
         });
