@@ -11,7 +11,7 @@ public class Usuario {
     private String name;
     private String email;
     private String password;
-    private String cpf;
+    private String cpf; // veificando a mascara do CPF
 
     public Usuario() {
 
@@ -47,10 +47,9 @@ public class Usuario {
         this.email = email;
     }
 
-    public void setCpf(String cpf) { this.cpf = cpf; }
+    public void setCpf(String cpf) { this.cpf = cpf; } // veificando a mascara do CPF
 
-    public String getCpf() { return cpf; }
-
+    public String getCpf() { return cpf; } // veificando a mascara do CPF
 
     @Exclude //@Exclude é usado para camuflar a senha ou determinado objeto abaixo dele.
     public String getPassword() {

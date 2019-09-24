@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +21,8 @@ import br.com.zupandroid.whatsappclone.R;
 import br.com.zupandroid.whatsappclone.config.ConfiguracaoFirebase;
 import br.com.zupandroid.whatsappclone.model.Usuario;
 
+import static br.com.zupandroid.whatsappclone.Aplication.CpfCnpjUtils.isValidCPF;
+
 public class CadastroUsuarioActivity extends AppCompatActivity {
 
     private EditText name;
@@ -29,10 +30,10 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     private EditText password;
     private Button botaoCadastrar;
     private Usuario usuario;
-    private EditText cpfUser;
+    private Class cpf;
 
     private FirebaseAuth autenticacao;
-
+    private EditText cpfUser; // veificando a mascara do CPF
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +41,14 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_usuario);
 
         setEdit();
-        cpfMask();
+        cpfMask(); // veificando a mascara do CPF
 
 
     }
 
     public void setEdit() {
 
-        cpfUser = findViewById(R.id.cpfId);
+        cpfUser = findViewById(R.id.cpf_Id1); // veificando a mascara do CPF
         name = findViewById(R.id.edit_Name_user);
         email = findViewById(R.id.edit_Email_user);
         password = findViewById(R.id.edit_Password_user);
@@ -61,14 +62,14 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 usuario.setName(name.getText().toString());
                 usuario.setEmail(email.getText().toString());
                 usuario.setPassword(password.getText().toString());
-                usuario.setCpf(cpfUser.getText().toString());
-                cadastrarUsuario();
-
-
+                usuario.setCpf(cpfUser.getText().toString());  // veificando a mascara do CPF
+                if (isValidCPF(usuario.getCpf())) {
+                    cadastrarUsuario();
+                } else {
+                    Toast.makeText(CadastroUsuarioActivity.this, "CPF invalido", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
-
     }
 
     public void cadastrarUsuario() {
@@ -83,8 +84,11 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                     Toast.makeText(CadastroUsuarioActivity.this, "Sucesso ao cadastrar usuario", Toast.LENGTH_LONG).show();
 
                     FirebaseUser userFirebase = task.getResult().getUser();
-                    usuario.setId( userFirebase.getUid());
+                    usuario.setId(userFirebase.getUid());
                     usuario.salvar();
+
+
+                    autenticacao.signOut();
 
                 } else {
                     Toast.makeText(CadastroUsuarioActivity.this, "Erro ao cadastrar Usuario", Toast.LENGTH_LONG).show();
@@ -94,9 +98,10 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
     }
 
-    private void cpfMask(){
+    private void cpfMask() {
         SimpleMaskFormatter simpleMaskFormatter = new SimpleMaskFormatter("NNN.NNN.NNN-NN");
-        MaskTextWatcher  maskTextWatcher = new MaskTextWatcher(cpfUser, simpleMaskFormatter);
+        MaskTextWatcher maskTextWatcher = new MaskTextWatcher(cpfUser, simpleMaskFormatter);
         cpfUser.addTextChangedListener(maskTextWatcher);
-    }
+    } // veificando a mascara do CPF
+
 }
