@@ -12,6 +12,7 @@
         android:layout_height="@dimen/alturaLogo"
         android:background="@drawable/logo"
         android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
         android:layout_marginTop="40dp"
 
         />
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imgWhatsLogin"
         android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
         android:layout_marginTop="20dp"
         android:hint="Digite seu email..."
 
@@ -34,6 +36,7 @@
         android:layout_below="@+id/emailIdLogin"
         android:layout_marginTop="20dp"
         android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
         android:hint="Digite sua senha...."
 
         />
@@ -46,6 +49,7 @@
         android:layout_marginTop="20dp"
         android:textSize="20dp"
         android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
         android:background="@color/colorPrimaryDark"
         android:text="@string/botao_logar"
 
@@ -57,6 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/idButtonLogin"
         android:layout_marginStart="85dp"
+        android:layout_marginEnd="70dp"
         android:layout_marginTop="20dp"
         android:text="@string/texto_cadastro"
         android:textColor="@color/whiteColor"

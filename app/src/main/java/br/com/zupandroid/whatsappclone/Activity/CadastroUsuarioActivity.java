@@ -14,8 +14,14 @@ import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthActionCodeException;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 import br.com.zupandroid.whatsappclone.R;
@@ -29,10 +35,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     private EditText password;
     private Button botaoCadastrar;
     private Usuario usuario;
-    private EditText cpfUser;
 
     private FirebaseAuth autenticacao;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +44,11 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_usuario);
 
         setEdit();
-        cpfMask();
-
 
     }
 
     public void setEdit() {
 
-        cpfUser = findViewById(R.id.cpfId);
         name = findViewById(R.id.edit_Name_user);
         email = findViewById(R.id.edit_Email_user);
         password = findViewById(R.id.edit_Password_user);
@@ -61,14 +62,10 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 usuario.setName(name.getText().toString());
                 usuario.setEmail(email.getText().toString());
                 usuario.setPassword(password.getText().toString());
-                usuario.setCpf(cpfUser.getText().toString());
                 cadastrarUsuario();
-
 
             }
         });
-
-
     }
 
     public void cadastrarUsuario() {
@@ -85,18 +82,28 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                     FirebaseUser userFirebase = task.getResult().getUser();
                     usuario.setId( userFirebase.getUid());
                     usuario.salvar();
+                    autenticacao.signOut();
+                    finish();
 
                 } else {
-                    Toast.makeText(CadastroUsuarioActivity.this, "Erro ao cadastrar Usuario", Toast.LENGTH_LONG).show();
+
+                    String erroExececao = "";
+                    try {
+                        throw task.getException();
+                    } catch (FirebaseAuthWeakPasswordException e){
+                        erroExececao = "Digite uma senha mais forte, contendo letras e números";
+
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        erroExececao = "O e-mail é invalido, digite um novo e-mail.";
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        erroExececao = "Esse e-mail já esta em uso neste app!";
+                    } catch (Exception e) {
+                        erroExececao = "Erro ao executar o app";
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(CadastroUsuarioActivity.this, "Erro: " + erroExececao, Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-    }
-
-    private void cpfMask(){
-        SimpleMaskFormatter simpleMaskFormatter = new SimpleMaskFormatter("NNN.NNN.NNN-NN");
-        MaskTextWatcher  maskTextWatcher = new MaskTextWatcher(cpfUser, simpleMaskFormatter);
-        cpfUser.addTextChangedListener(maskTextWatcher);
     }
 }
