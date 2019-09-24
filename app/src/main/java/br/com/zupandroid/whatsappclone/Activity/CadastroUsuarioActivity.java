@@ -29,7 +29,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     private EditText password;
     private Button botaoCadastrar;
     private Usuario usuario;
-    private EditText cpfUser;
 
     private FirebaseAuth autenticacao;
 
@@ -40,14 +39,12 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_usuario);
 
         setEdit();
-        cpfMask();
 
 
     }
 
     public void setEdit() {
 
-        cpfUser = findViewById(R.id.cpfId);
         name = findViewById(R.id.edit_Name_user);
         email = findViewById(R.id.edit_Email_user);
         password = findViewById(R.id.edit_Password_user);
@@ -61,7 +58,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 usuario.setName(name.getText().toString());
                 usuario.setEmail(email.getText().toString());
                 usuario.setPassword(password.getText().toString());
-                usuario.setCpf(cpfUser.getText().toString());
                 cadastrarUsuario();
 
 
@@ -92,11 +88,5 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void cpfMask(){
-        SimpleMaskFormatter simpleMaskFormatter = new SimpleMaskFormatter("NNN.NNN.NNN-NN");
-        MaskTextWatcher  maskTextWatcher = new MaskTextWatcher(cpfUser, simpleMaskFormatter);
-        cpfUser.addTextChangedListener(maskTextWatcher);
     }
 }
