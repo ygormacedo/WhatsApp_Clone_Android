@@ -14,8 +14,14 @@ import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthActionCodeException;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 import br.com.zupandroid.whatsappclone.R;
@@ -32,14 +38,12 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
     private FirebaseAuth autenticacao;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_usuario);
 
         setEdit();
-
 
     }
 
@@ -60,11 +64,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 usuario.setPassword(password.getText().toString());
                 cadastrarUsuario();
 
-
             }
         });
-
-
     }
 
     public void cadastrarUsuario() {
@@ -81,12 +82,28 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                     FirebaseUser userFirebase = task.getResult().getUser();
                     usuario.setId( userFirebase.getUid());
                     usuario.salvar();
+                    autenticacao.signOut();
+                    finish();
 
                 } else {
-                    Toast.makeText(CadastroUsuarioActivity.this, "Erro ao cadastrar Usuario", Toast.LENGTH_LONG).show();
+
+                    String erroExececao = "";
+                    try {
+                        throw task.getException();
+                    } catch (FirebaseAuthWeakPasswordException e){
+                        erroExececao = "Digite uma senha mais forte, contendo letras e números";
+
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        erroExececao = "O e-mail é invalido, digite um novo e-mail.";
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        erroExececao = "Esse e-mail já esta em uso neste app!";
+                    } catch (Exception e) {
+                        erroExececao = "Erro ao executar o app";
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(CadastroUsuarioActivity.this, "Erro: " + erroExececao, Toast.LENGTH_LONG).show();
                 }
             }
         });
-
     }
 }
