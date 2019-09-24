@@ -63,4 +63,16 @@
         android:layout_marginTop="20dp"
 
         />
+
+    <EditText
+        android:id="@+id/cpfId"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_Button_User"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/digite_seu_cpf"
+        android:paddingLeft="40dp"
+
+        />
 </RelativeLayout>

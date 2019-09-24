@@ -11,6 +11,7 @@ public class Usuario {
     private String name;
     private String email;
     private String password;
+    private String cpf;
 
     public Usuario() {
 
@@ -45,6 +46,12 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void setCpf(String cpf) { this.cpf = cpf; }
+
+    public String getCpf() { return cpf; }
+
+
     @Exclude //@Exclude é usado para camuflar a senha ou determinado objeto abaixo dele.
     public String getPassword() {
         return password;
@@ -53,4 +60,7 @@ public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
+
 }

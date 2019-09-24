@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,6 +29,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     private EditText password;
     private Button botaoCadastrar;
     private Usuario usuario;
+    private EditText cpfUser;
 
     private FirebaseAuth autenticacao;
 
@@ -36,12 +40,14 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_usuario);
 
         setEdit();
+        cpfMask();
 
 
     }
 
     public void setEdit() {
 
+        cpfUser = findViewById(R.id.cpfId);
         name = findViewById(R.id.edit_Name_user);
         email = findViewById(R.id.edit_Email_user);
         password = findViewById(R.id.edit_Password_user);
@@ -55,6 +61,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 usuario.setName(name.getText().toString());
                 usuario.setEmail(email.getText().toString());
                 usuario.setPassword(password.getText().toString());
+                usuario.setCpf(cpfUser.getText().toString());
                 cadastrarUsuario();
 
 
@@ -87,4 +94,9 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
     }
 
+    private void cpfMask(){
+        SimpleMaskFormatter simpleMaskFormatter = new SimpleMaskFormatter("NNN.NNN.NNN-NN");
+        MaskTextWatcher  maskTextWatcher = new MaskTextWatcher(cpfUser, simpleMaskFormatter);
+        cpfUser.addTextChangedListener(maskTextWatcher);
+    }
 }
