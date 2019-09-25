@@ -37,6 +37,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
+        android:password="true"
         android:hint="Digite sua senha...."
 
         />
@@ -54,7 +55,7 @@
         android:text="@string/botao_logar"
 
         />
-    
+
     <TextView
         android:id="@+id/clickText"
         android:layout_width="300dp"
@@ -67,7 +68,6 @@
         android:textColor="@color/whiteColor"
         android:textSize="20sp"
         android:onClick="abriCadastroUsuario"
-
 
         />
 

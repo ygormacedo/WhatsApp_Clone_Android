@@ -37,7 +37,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        verificarUser();
         setLogin();
+    }
+
+    private void verificarUser(){
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        if(autenticacao.getCurrentUser() != null){
+            abriTelaPrincipal();
+        }
+
     }
 
 
@@ -71,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    abriTelaPrincipal();
                     Toast.makeText(LoginActivity.this, "Sucesso ao efetuar Login !", Toast.LENGTH_LONG).show();
                 } else {
                     String erroExecucao = "";
@@ -93,6 +103,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void abriTelaPrincipal(){
+
+        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void abriCadastroUsuario(View view) {

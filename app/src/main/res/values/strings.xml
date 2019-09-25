@@ -9,4 +9,5 @@
     <string name="digite_sua_senha">Digite sua senha</string>
     <string name="botao_cadastrar">CADASTRAR</string>
     <string name="digite_seu_cpf">digite_seu_cpf</string>
+    <string name="signout">Sair</string>
 </resources>

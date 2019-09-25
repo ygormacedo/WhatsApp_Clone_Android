@@ -6,4 +6,17 @@
     android:background="@color/colorPrimary"
     tools:context=".Activity.MainActivity">
 
+    <Button
+        android:id="@+id/buttonSignOut"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/signout"
+
+        />
+
 </RelativeLayout>
