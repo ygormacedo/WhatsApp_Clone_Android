@@ -10,4 +10,7 @@
     <string name="botao_cadastrar">CADASTRAR</string>
     <string name="digite_seu_cpf">digite_seu_cpf</string>
     <string name="signout">Sair</string>
+    <string name="item_configuracoes">Configurações</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

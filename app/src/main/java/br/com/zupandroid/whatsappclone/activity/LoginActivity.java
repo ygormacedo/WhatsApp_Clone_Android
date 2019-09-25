@@ -1,7 +1,4 @@
-package br.com.zupandroid.whatsappclone.Activity;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package br.com.zupandroid.whatsappclone.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -17,7 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.database.DatabaseReference;
-
 
 import br.com.zupandroid.whatsappclone.R;
 import br.com.zupandroid.whatsappclone.config.ConfiguracaoFirebase;
