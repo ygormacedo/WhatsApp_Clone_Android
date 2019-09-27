@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".Activity.LoginActivity">
+    tools:context=".activity.LoginActivity">
 
     <ImageView
         android:id="@+id/imgWhatsLogin"
@@ -37,6 +37,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
+        android:password="true"
         android:hint="Digite sua senha...."
 
         />
@@ -52,9 +53,10 @@
         android:layout_marginEnd="60dp"
         android:background="@color/colorPrimaryDark"
         android:text="@string/botao_logar"
+        android:theme="@style/botaoPadrao"
 
         />
-    
+
     <TextView
         android:id="@+id/clickText"
         android:layout_width="300dp"
@@ -67,7 +69,6 @@
         android:textColor="@color/whiteColor"
         android:textSize="20sp"
         android:onClick="abriCadastroUsuario"
-
 
         />
 

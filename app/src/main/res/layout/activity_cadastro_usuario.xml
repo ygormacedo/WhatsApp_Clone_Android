@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".Activity.CadastroUsuarioActivity">
+    tools:context=".activity.CadastroUsuarioActivity">
 
     <ImageView
         android:id="@+id/edit_logo_cadastro"
@@ -66,6 +66,7 @@
         android:text="@string/botao_cadastrar"
         android:textSize="20dp"
         android:layout_marginTop="20dp"
+        android:theme="@style/botaoPadrao"
 
         />
 </RelativeLayout>
