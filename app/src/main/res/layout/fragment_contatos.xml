@@ -5,20 +5,17 @@
     android:layout_height="match_parent"
     tools:context=".fragment.ContatosFragment">
 
-    <TextView
-        android:id="@+id/contactsFragment"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:textSize="30sp"
-        android:text="Contatos"
-        android:layout_marginStart="120dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginTop="260dp"
 
-
+    <ListView
+        android:id="@+id/lv_Contacts"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:divider="@color/cinzou"
+        android:dividerHeight="1dp"
         />
-
-
-
 
 </FrameLayout>
