@@ -13,4 +13,7 @@
     <string name="item_configuracoes">Configurações</string>
     <string name="action_settings">Settings</string>
     <string name="activity_main_label">Whatsapp</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
