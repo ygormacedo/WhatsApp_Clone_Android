@@ -1,10 +1,12 @@
 package br.com.zupandroid.whatsappclone.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -19,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import br.com.zupandroid.whatsappclone.R;
+import br.com.zupandroid.whatsappclone.activity.ConversaActivity;
 import br.com.zupandroid.whatsappclone.adapter.ContatoAdapter;
 import br.com.zupandroid.whatsappclone.config.ConfiguracaoFirebase;
 import br.com.zupandroid.whatsappclone.helper.Preferencias;
@@ -105,6 +108,13 @@ public class ContatosFragment extends Fragment {
 
             }
         };
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), ConversaActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
