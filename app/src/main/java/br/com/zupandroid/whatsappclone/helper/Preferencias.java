@@ -3,8 +3,6 @@ package br.com.zupandroid.whatsappclone.helper;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.util.HashMap;
-
 public class Preferencias<hashMap> {
 
     private Context contexto;
@@ -13,10 +11,7 @@ public class Preferencias<hashMap> {
     private int MODE = 0;
     private SharedPreferences.Editor editor;
 
-    private String CHAVE_NOME = "nome";
-    private String CHAVE_TELEFONE = "telefone";
-    private String CHAVE_TOKEN = "token";
-
+    private final String CHAVE_IDENTIFICADOR = "identificadoUsarioLogado";
 
     public Preferencias(Context contextParametro) {
 
@@ -26,25 +21,16 @@ public class Preferencias<hashMap> {
 
     }
 
-    public void salvarUsuariosPreferencias(String nome, String telefone, String token) {
+    public void salvarDados(String identificadousuario ) {
 
-        editor.putString("nome", nome);
-        editor.putString("telefone", telefone);
-        editor.putString("token", token);
+        editor.putString(CHAVE_IDENTIFICADOR, identificadousuario);
         editor.commit();
+
 
     }
 
-    public HashMap<String, String> getDadosUsuario() {
-
-        HashMap<String, String> dadoUsuario = new HashMap<>();
-
-        dadoUsuario.put(CHAVE_NOME, preferences.getString(CHAVE_NOME, null));
-        dadoUsuario.put(CHAVE_TELEFONE, preferences.getString(CHAVE_TELEFONE, null));
-        dadoUsuario.put(CHAVE_TOKEN, preferences.getString(CHAVE_TOKEN, null));
-
-        return dadoUsuario;
-
+    public String getIdentificado(){
+        return preferences.getString(CHAVE_IDENTIFICADOR,null);
     }
 
 }
