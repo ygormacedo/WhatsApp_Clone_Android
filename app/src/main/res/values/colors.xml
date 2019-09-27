@@ -5,4 +5,6 @@
     <color name="colorPrimary">#0b6156</color>
     <color name="whiteColor">#FFFFFF</color>
     <color name="colorAccente">#3d958a</color>
+    <color name="blackFort">#000000</color>
+    <color name="cinzou">#CCCCCC</color>
 </resources>
