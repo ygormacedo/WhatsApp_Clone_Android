@@ -1,5 +1,6 @@
 package br.com.zupandroid.whatsappclone.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import br.com.zupandroid.whatsappclone.R;
 import br.com.zupandroid.whatsappclone.config.ConfiguracaoFirebase;
+import br.com.zupandroid.whatsappclone.helper.Base64Custom;
+import br.com.zupandroid.whatsappclone.helper.Preferencias;
 import br.com.zupandroid.whatsappclone.model.Usuario;
 
 public class CadastroUsuarioActivity extends AppCompatActivity {
@@ -74,17 +77,22 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                     Toast.makeText(CadastroUsuarioActivity.this, "Sucesso ao cadastrar usuario", Toast.LENGTH_LONG).show();
 
                     FirebaseUser userFirebase = task.getResult().getUser();
-                    usuario.setId( userFirebase.getUid());
+
+                    String indentificadorUser = Base64Custom.codificarBase64(usuario.getEmail());
+                    usuario.setId(indentificadorUser);
                     usuario.salvar();
-                    autenticacao.signOut();
-                    finish();
+
+                    Preferencias preferencias = new Preferencias(CadastroUsuarioActivity.this);
+                    preferencias.salvarDados(indentificadorUser) ;
+
+                    openLoginUser();
 
                 } else {
 
                     String erroExececao = "";
                     try {
                         throw task.getException();
-                    } catch (FirebaseAuthWeakPasswordException e){
+                    } catch (FirebaseAuthWeakPasswordException e) {
                         erroExececao = "Digite uma senha mais forte, contendo letras e números";
 
                     } catch (FirebaseAuthInvalidCredentialsException e) {
@@ -99,5 +107,11 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void openLoginUser(){
+        Intent intent = new Intent(CadastroUsuarioActivity.this,LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

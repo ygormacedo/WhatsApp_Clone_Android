@@ -14,12 +14,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.database.DatabaseReference;
 
 import br.com.zupandroid.whatsappclone.R;
 import br.com.zupandroid.whatsappclone.config.ConfiguracaoFirebase;
+import br.com.zupandroid.whatsappclone.helper.Base64Custom;
+import br.com.zupandroid.whatsappclone.helper.Preferencias;
 import br.com.zupandroid.whatsappclone.model.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
@@ -79,23 +79,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+
+                    Preferencias preferencias = new Preferencias(LoginActivity.this);
+                    String indentificadoUsuarioLogado = Base64Custom.codificarBase64(usuario.getEmail());
+                    preferencias.salvarDados(indentificadoUsuarioLogado);
+
+
                     abriTelaPrincipal();
                     Toast.makeText(LoginActivity.this, "Sucesso ao efetuar Login !", Toast.LENGTH_LONG).show();
                 } else {
-                    String erroExecucao = "";
-                    try {
-                        throw task.getException();
-
-                    } catch (FirebaseAuthInvalidUserException e) {
-                        erroExecucao = "Erro a conta de usuário correspondente ao email não existe ou foi desativada ";
-                        e.printStackTrace();
-                    } catch (FirebaseAuthInvalidCredentialsException e) {
-                        erroExecucao = "Sua senha esta errada";
-                        e.printStackTrace();
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
-
                     Toast.makeText(LoginActivity.this, "Erro ao efetuar Login !", Toast.LENGTH_LONG).show();
 
                 }
