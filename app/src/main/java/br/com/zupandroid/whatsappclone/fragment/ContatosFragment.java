@@ -1,10 +1,12 @@
 package br.com.zupandroid.whatsappclone.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -19,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import br.com.zupandroid.whatsappclone.R;
+import br.com.zupandroid.whatsappclone.activity.ConversaActivity;
+import br.com.zupandroid.whatsappclone.adapter.ContatoAdapter;
 import br.com.zupandroid.whatsappclone.config.ConfiguracaoFirebase;
 import br.com.zupandroid.whatsappclone.helper.Preferencias;
 import br.com.zupandroid.whatsappclone.model.Contato;
@@ -30,14 +34,27 @@ public class ContatosFragment extends Fragment {
 
     private ListView listView;
     private ArrayAdapter adapter;
-    private ArrayList<String> contatos;
+    private ArrayList<Contato> contatos;
     private DatabaseReference firebase;
+    private ValueEventListener valueEventListenerContatos;
 
 
     public ContatosFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        firebase.addValueEventListener(valueEventListenerContatos);
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        firebase.removeEventListener(valueEventListenerContatos);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,10 +67,11 @@ public class ContatosFragment extends Fragment {
 
         // montar listView e adapter
         listView = view.findViewById(R.id.lv_Contacts);
-        adapter = new ArrayAdapter<>(
-                getActivity(),
-                R.layout.lista_contato,
-                contatos);
+//        adapter = new ArrayAdapter<>(
+//                getActivity(),
+//                R.layout.lista_contato,
+//                contatos);
+        adapter = new ContatoAdapter(getActivity(),contatos);
         listView.setAdapter(adapter);
 
         //recuperar dados do firebase
@@ -65,7 +83,7 @@ public class ContatosFragment extends Fragment {
                 .child("contatos").child(identificadorUsuarioLogado);
 
         // listener para recuperar contatos....
-        firebase.addValueEventListener(new ValueEventListener() {
+        valueEventListenerContatos = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Limpar lista
@@ -78,7 +96,7 @@ public class ContatosFragment extends Fragment {
                 for (DataSnapshot dados : dataSnapshot.getChildren()) {
 
                     Contato contato = dados.getValue(Contato.class);
-                    contatos.add(contato.getName());
+                    contatos.add(contato);
                 }
 
                 adapter.notifyDataSetChanged();
@@ -89,10 +107,25 @@ public class ContatosFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+        };
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(getActivity(), ConversaActivity.class);
+
+                // recuperar dados a serem passados
+                Contato contato = contatos.get(position);
+
+
+                //enviando dados para conversa activity
+                intent.putExtra("nome", contato.getName() );
+                intent.putExtra("email",contato.getEmail() );
+
+                startActivity(intent);
+            }
         });
-
         return view;
-
     }
 
 }
