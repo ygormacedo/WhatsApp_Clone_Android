@@ -8,7 +8,7 @@
         android:id="@+id/textMensagem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mensagem"
+        android:text="@string/mensagem"
         android:textColor="@color/whiteColor"
         android:padding="8dp"
         android:background="@color/colorPrimary"
