@@ -2,16 +2,25 @@ package br.com.zupandroid.whatsappclone.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import br.com.zupandroid.whatsappclone.R;
+import br.com.zupandroid.whatsappclone.adapter.MensagemAdapter;
 import br.com.zupandroid.whatsappclone.config.ConfiguracaoFirebase;
 import br.com.zupandroid.whatsappclone.helper.Base64Custom;
 import br.com.zupandroid.whatsappclone.helper.Preferencias;
@@ -23,6 +32,10 @@ public class ConversaActivity extends AppCompatActivity {
     private EditText editMensagem;
     private ImageButton btnEnviar;
     private DatabaseReference firebase;
+    private ListView listView;
+    private ArrayList<Mensagem> mensagens;
+    private ArrayAdapter<Mensagem> adapter;
+    private ValueEventListener valueEventListenerMensagem;
 
     //dados do destinatario
 
@@ -46,6 +59,7 @@ public class ConversaActivity extends AppCompatActivity {
         editMensagem = findViewById(R.id.editMensagem);
         btnEnviar = findViewById(R.id.btnEnviar);
         toolbar = findViewById(R.id.toolbarConversa);
+        listView = findViewById(R.id.listConversa);
 
         // dados do usuario logado
 
@@ -66,6 +80,51 @@ public class ConversaActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_action_arrow_left);
         setSupportActionBar(toolbar);
 
+        // Montando a listView e adapter
+
+        mensagens = new ArrayList<>();
+        adapter = new MensagemAdapter(ConversaActivity.this, mensagens);
+
+//        adapter = new ArrayAdapter(
+//                ConversaActivity.this,
+//                android.R.layout.simple_list_item_1,
+//                mensagens
+//        );
+
+        listView.setAdapter(adapter);
+
+        //recuperar mensagem do firebase
+
+        firebase = ConfiguracaoFirebase.getFirebase()
+                .child("mensagens")
+                .child(idUsuarioRementente)
+                .child(idUsuarioDestinatario);
+
+        // Criar listener para mensagens
+
+        valueEventListenerMensagem = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //limpar mensagens
+                mensagens.clear();
+
+
+                //recuperar mensagens
+                for (DataSnapshot dados : dataSnapshot.getChildren()) {
+                    Mensagem mensagem = dados.getValue(Mensagem.class);
+                    mensagens.add(mensagem);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+
+            }
+        };
+
+        firebase.addValueEventListener(valueEventListenerMensagem);
         //enviar mensagem
 
         btnEnviar.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +142,7 @@ public class ConversaActivity extends AppCompatActivity {
                     mensagem.setMensagem(textoMensagem);
 
 
-                    salvedMensagem(idUsuarioRementente, idUsuarioDestinatario,mensagem);
+                    salvedMensagem(idUsuarioRementente, idUsuarioDestinatario, mensagem);
 
                     editMensagem.setText("");
 
@@ -103,12 +162,17 @@ public class ConversaActivity extends AppCompatActivity {
                     .setValue(mensagem);
 
 
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebase.removeEventListener(valueEventListenerMensagem);
     }
 }
