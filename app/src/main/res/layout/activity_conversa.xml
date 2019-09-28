@@ -32,16 +32,18 @@
         >
 
         <EditText
+            android:id="@+id/editMensagem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="mensagem"
-            android:textColor="@color/blackFortc"
+            android:textColor="@android:color/black"
             android:textColorHint="@android:color/black"
 
             />
 
         <ImageButton
+            android:id="@+id/btnEnviar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_send"

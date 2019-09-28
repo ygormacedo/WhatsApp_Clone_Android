@@ -111,7 +111,17 @@ public class ContatosFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Intent intent = new Intent(getActivity(), ConversaActivity.class);
+
+                // recuperar dados a serem passados
+                Contato contato = contatos.get(position);
+
+
+                //enviando dados para conversa activity
+                intent.putExtra("nome", contato.getName() );
+                intent.putExtra("email",contato.getEmail() );
+
                 startActivity(intent);
             }
         });
