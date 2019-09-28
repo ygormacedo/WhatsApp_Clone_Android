@@ -14,5 +14,43 @@
         app:popupTheme="@style/Theme.AppCompat.Light"
         tools:ignore="MissingConstraints" />
 
+    <ListView
+        android:id="@+id/listConversa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        >
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="mensagem"
+            android:textColor="@color/blackFortc"
+            android:textColorHint="@android:color/black"
+
+            />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_send"
+            android:theme="@style/botaoPadrao"
+
+            />
+
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
