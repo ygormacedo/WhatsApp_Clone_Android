@@ -5,17 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".fragment.ConversasFragment">
 
-  <TextView
-      android:id="@+id/conversasFragment"
-      android:layout_width="155dp"
-      android:layout_height="50dp"
-      android:text="Conversas"
-      android:textSize="30sp"
-      android:layout_marginStart="120dp"
-      android:layout_marginEnd="120dp"
-      android:layout_marginTop="260dp"
-      android:textColor="@android:color/black"
-
+  <ListView
+      android:id="@+id/listConversas"
+      android:layout_marginTop="10dp"
+      android:layout_marginBottom="10dp"
+      android:layout_marginEnd="10dp"
+      android:layout_marginStart="10dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:divider="@color/cinzou"
+      android:dividerHeight="1dp"
       />
 
 

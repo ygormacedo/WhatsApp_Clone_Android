@@ -13,17 +13,18 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 import br.com.zupandroid.whatsappclone.R;
-import br.com.zupandroid.whatsappclone.model.Contato;
+import br.com.zupandroid.whatsappclone.model.Conversa;
 
-public class ContatoAdapter extends ArrayAdapter<Contato> {
+public class ConversaAdapter extends ArrayAdapter<Conversa> {
 
-    private ArrayList<Contato> contatos;
+
+    private ArrayList<Conversa> conversas;
     private Context context;
 
-    public ContatoAdapter(@NonNull Context c, @NonNull ArrayList<Contato> objects) {
+    public ConversaAdapter(@NonNull Context c, @NonNull ArrayList<Conversa> objects) {
         super(c, 0, objects);
-        this.contatos = objects;
         this.context = c;
+        this.conversas = objects;
     }
 
     @NonNull
@@ -32,25 +33,20 @@ public class ContatoAdapter extends ArrayAdapter<Contato> {
 
         View view = null;
 
-        //verificar se a lista esta vazia
-        if (contatos != null){
+        if (conversas != null){
 
-            //Inicializar objeto para montagem de View
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            //montar view a partir do xml
             view = inflater.inflate(R.layout.lista_contato,parent,false);
 
-            //recuperar elemento para exibição
-            TextView nomeContato = view.findViewById(R.id.tv_Titulo);
-            TextView emailContato = view.findViewById(R.id.tv_SubTitulo);
-            Contato contato = contatos.get(position);
-            nomeContato.setText(contato.getName());
-            emailContato.setText(contato.getEmail());
+            TextView nome = view.findViewById(R.id.tv_Titulo);
+            TextView ultimaMensagem = view.findViewById(R.id.tv_SubTitulo);
 
+            Conversa conversa = conversas.get(position);
+            nome.setText(conversa.getNome());
+            ultimaMensagem.setText(conversa.getMensagem());
         }
-
-
         return view;
     }
+
 }
