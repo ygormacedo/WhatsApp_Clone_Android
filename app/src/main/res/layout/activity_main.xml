@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
-    <include android:id="@+id/menuToolbar"
-        layout="@layout/toolbar"/>
-
-
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/menuToolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@color/colorPrimary"-->
-<!--        app:popupTheme="@style/Theme.AppCompat.Light"-->
-<!--        />-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/menuToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:popupTheme="@style/Theme.AppCompat.Light"
+        />
 
     <br.com.zupandroid.whatsappclone.helper.SlidingTabLayout
         android:id="@+id/styleTab"
