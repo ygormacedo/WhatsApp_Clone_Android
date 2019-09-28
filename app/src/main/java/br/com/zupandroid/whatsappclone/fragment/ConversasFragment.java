@@ -88,10 +88,9 @@ public class ConversasFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), ConversaActivity.class);
 
                 Conversa conversa = conversas.get(position);
-
+                Intent intent = new Intent(getActivity(), ConversaActivity.class);
                 intent.putExtra("nome", conversa.getNome());
                 String email = Base64Custom.decodificadorBase64(conversa.getIdUsuario());
                 intent.putExtra("email", email);
