@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="br.com.zupandroid.whatsappclone">
 
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.ConversaActivity"></activity>
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
@@ -21,13 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.ConversaActivity"
+            android:parentActivityName=".activity.MainActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.CadastroUsuarioActivity" />
-    </application>
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.SEND_SMS" />
+    </application>
+
 
 </manifest>
