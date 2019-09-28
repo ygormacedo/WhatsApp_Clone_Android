@@ -33,6 +33,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     private Button botaoCadastrar;
     private Usuario usuario;
 
+
     private FirebaseAuth autenticacao;
 
     @Override
@@ -83,7 +84,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                     usuario.salvar();
 
                     Preferencias preferencias = new Preferencias(CadastroUsuarioActivity.this);
-                    preferencias.salvarDados(indentificadorUser) ;
+                    preferencias.salvarDados(indentificadorUser, usuario.getName());
 
                     openLoginUser();
 
@@ -109,8 +110,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         });
     }
 
-    public void openLoginUser(){
-        Intent intent = new Intent(CadastroUsuarioActivity.this,LoginActivity.class);
+    public void openLoginUser() {
+        Intent intent = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
