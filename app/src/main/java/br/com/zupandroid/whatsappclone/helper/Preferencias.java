@@ -12,6 +12,7 @@ public class Preferencias<hashMap> {
     private SharedPreferences.Editor editor;
 
     private final String CHAVE_IDENTIFICADOR = "identificadoUsarioLogado";
+    private final String CHAVE_NOME = "nomeUsarioLogado";
 
     public Preferencias(Context contextParametro) {
 
@@ -21,16 +22,21 @@ public class Preferencias<hashMap> {
 
     }
 
-    public void salvarDados(String identificadousuario ) {
+    public void salvarDados(String identificadousuario, String nomeUsuario) {
 
         editor.putString(CHAVE_IDENTIFICADOR, identificadousuario);
+        editor.putString(CHAVE_NOME, nomeUsuario);
         editor.commit();
 
 
     }
 
-    public String getIdentificado(){
-        return preferences.getString(CHAVE_IDENTIFICADOR,null);
+    public String getIdentificado() {
+        return preferences.getString(CHAVE_IDENTIFICADOR, null);
+    }
+
+    public String getNome() {
+        return preferences.getString(CHAVE_NOME, null);
     }
 
 }

@@ -24,6 +24,7 @@ import br.com.zupandroid.whatsappclone.adapter.MensagemAdapter;
 import br.com.zupandroid.whatsappclone.config.ConfiguracaoFirebase;
 import br.com.zupandroid.whatsappclone.helper.Base64Custom;
 import br.com.zupandroid.whatsappclone.helper.Preferencias;
+import br.com.zupandroid.whatsappclone.model.Conversa;
 import br.com.zupandroid.whatsappclone.model.Mensagem;
 
 public class ConversaActivity extends AppCompatActivity {
@@ -45,6 +46,7 @@ public class ConversaActivity extends AppCompatActivity {
     //dados do rementente
 
     private String idUsuarioRementente;
+    private String nomeUsuarioRemetente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class ConversaActivity extends AppCompatActivity {
 
         Preferencias preferencias = new Preferencias(ConversaActivity.this);
         idUsuarioRementente = preferencias.getIdentificado();
+        nomeUsuarioRemetente = preferencias.getNome();
 
 
         Bundle extra = getIntent().getExtras();
@@ -142,18 +145,61 @@ public class ConversaActivity extends AppCompatActivity {
                     mensagem.setMensagem(textoMensagem);
 
                     //salvar mensagem para remetente
-                    salvedMensagem(idUsuarioRementente, idUsuarioDestinatario, mensagem);
+                    Boolean retornoMensagemRemetente = salvedMensagem(idUsuarioRementente, idUsuarioDestinatario, mensagem);
+                    if (!retornoMensagemRemetente) {
+                        Toast.makeText(
+                                ConversaActivity.this,
+                                "Problema ao salvar a mensagem, tente novamente",
+                                Toast.LENGTH_LONG
+                        ).show();
+                    } else {
 
-                    //salvar mensagem para o destinatario
-                    salvedMensagem(idUsuarioDestinatario, idUsuarioRementente, mensagem);
+                        //salvar mensagem para o destinatario
+                        Boolean retornoMensagemDestinatario = salvedMensagem(idUsuarioDestinatario, idUsuarioRementente, mensagem);
+                        if (!retornoMensagemDestinatario) {
+                            Toast.makeText(
+                                    ConversaActivity.this,
+                                    "Problema ao enviar mensagem ao destinatário, tente novamente!",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                        }
+                    }
+                }
+                // Salvar conversa para o remetente
+                Conversa conversa = new Conversa();
+                conversa.setIdUsuario(idUsuarioDestinatario);
+                conversa.setNome(usuarioDestinaratario);
+                conversa.setMensagem(textoMensagem);
+                Boolean retornoConversaRemetente = salvarConversar(idUsuarioRementente, idUsuarioDestinatario, conversa);
+                if (!retornoConversaRemetente) {
+                    Toast.makeText(
+                            ConversaActivity.this,
+                            "Problema ao salvar, tente novamente!",
+                            Toast.LENGTH_LONG
+                    ).show();
+                } else {
+                    // Salvar conversa para o Destinatario
 
-                    editMensagem.setText("");
-
+                    Conversa talk = new Conversa();
+                    talk.setIdUsuario(idUsuarioRementente);
+                    talk.setNome(nomeUsuarioRemetente);
+                    talk.setMensagem(textoMensagem);
+                    Boolean retornoConversaDestinatario = salvarConversar(idUsuarioDestinatario, idUsuarioRementente, talk);
+                    if (!retornoConversaDestinatario){
+                        Toast.makeText(
+                                ConversaActivity.this,
+                                "Problema ao salvar conversa para o destinatario, tente novamente!",
+                                Toast.LENGTH_LONG
+                        ).show();
 
                 }
+
+                editMensagem.setText("");
             }
-        });
-    }
+
+        }
+    });
+}
 
     private boolean salvedMensagem(String idRementente, String idDestinatario, Mensagem mensagem) {
         try {
@@ -165,6 +211,22 @@ public class ConversaActivity extends AppCompatActivity {
                     .setValue(mensagem);
 
 
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    private boolean salvarConversar(String idRementente, String idDestinatario, Conversa conversa) {
+
+        try {
+
+            firebase = ConfiguracaoFirebase.getFirebase().child("conversas");
+            firebase.child(idRementente)
+                    .child(idDestinatario)
+                    .setValue(conversa);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

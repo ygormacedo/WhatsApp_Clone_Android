@@ -14,7 +14,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import br.com.zupandroid.whatsappclone.R;
 import br.com.zupandroid.whatsappclone.config.ConfiguracaoFirebase;
@@ -30,6 +33,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private Usuario usuario;
     private FirebaseAuth autenticacao;
+    private DatabaseReference firebase;
+    private ValueEventListener valueEventListenerUsuario;
+    private String indentificadoUsuarioLogado;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +47,11 @@ public class LoginActivity extends AppCompatActivity {
         setLogin();
     }
 
-    private void verificarUser(){
+    private void verificarUser() {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        if(autenticacao.getCurrentUser() != null){
+        if (autenticacao.getCurrentUser() != null) {
             abriTelaPrincipal();
+
         }
 
     }
@@ -80,9 +88,27 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
 
-                    Preferencias preferencias = new Preferencias(LoginActivity.this);
-                    String indentificadoUsuarioLogado = Base64Custom.codificarBase64(usuario.getEmail());
-                    preferencias.salvarDados(indentificadoUsuarioLogado);
+                    indentificadoUsuarioLogado = Base64Custom.codificarBase64(usuario.getEmail());
+
+                    firebase = ConfiguracaoFirebase.getFirebase()
+                            .child("usuarios")
+                            .child(indentificadoUsuarioLogado);
+
+                    valueEventListenerUsuario = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                             Usuario usuarioRecuperado = dataSnapshot.getValue(Usuario.class);
+                            Preferencias preferencias = new Preferencias(LoginActivity.this);
+                            preferencias.salvarDados(indentificadoUsuarioLogado, usuarioRecuperado.getName() );
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    };
+                    firebase.addListenerForSingleValueEvent(valueEventListenerUsuario);
 
 
                     abriTelaPrincipal();
@@ -96,9 +122,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void abriTelaPrincipal(){
+    private void abriTelaPrincipal() {
 
-        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
