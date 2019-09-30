@@ -40,7 +40,7 @@ public class ConversaActivity extends AppCompatActivity {
 
     //dados do destinatario
 
-    private String nomeUsuarioDestinaratario;
+    private String usuarioDestinaratario;
     private String idUsuarioDestinatario;
 
     //dados do rementente
@@ -73,13 +73,13 @@ public class ConversaActivity extends AppCompatActivity {
         Bundle extra = getIntent().getExtras();
 
         if (extra != null) {
-            nomeUsuarioDestinaratario = extra.getString("nome");
+            usuarioDestinaratario = extra.getString("nome");
             String emailDestinatario = extra.getString("email");
             idUsuarioDestinatario = Base64Custom.codificarBase64(emailDestinatario);
         }
 
 
-        toolbar.setTitle(nomeUsuarioDestinaratario);
+        toolbar.setTitle(usuarioDestinaratario);
         toolbar.setNavigationIcon(R.drawable.ic_action_arrow_left);
         setSupportActionBar(toolbar);
 
@@ -144,65 +144,62 @@ public class ConversaActivity extends AppCompatActivity {
                     mensagem.setIdUsuario(idUsuarioRementente);
                     mensagem.setMensagem(textoMensagem);
 
-
                     //salvar mensagem para remetente
                     Boolean retornoMensagemRemetente = salvedMensagem(idUsuarioRementente, idUsuarioDestinatario, mensagem);
                     if (!retornoMensagemRemetente) {
                         Toast.makeText(
                                 ConversaActivity.this,
-                                "Problema ao salvar mensagem, tente novamente!",
+                                "Problema ao salvar a mensagem, tente novamente",
                                 Toast.LENGTH_LONG
                         ).show();
                     } else {
+
                         //salvar mensagem para o destinatario
-                        Boolean retronoMensagemDestinatario = salvedMensagem(idUsuarioDestinatario, idUsuarioRementente, mensagem);
-                        if (!retronoMensagemDestinatario) {
+                        Boolean retornoMensagemDestinatario = salvedMensagem(idUsuarioDestinatario, idUsuarioRementente, mensagem);
+                        if (!retornoMensagemDestinatario) {
                             Toast.makeText(
                                     ConversaActivity.this,
-                                    "Problema ao enviar mensagem para o destinatário, tente novamente!",
+                                    "Problema ao enviar mensagem ao destinatário, tente novamente!",
                                     Toast.LENGTH_LONG
                             ).show();
                         }
                     }
+                }
+                // Salvar conversa para o remetente
+                Conversa conversa = new Conversa();
+                conversa.setIdUsuario(idUsuarioDestinatario);
+                conversa.setNome(usuarioDestinaratario);
+                conversa.setMensagem(textoMensagem);
+                Boolean retornoConversaRemetente = salvarConversar(idUsuarioRementente, idUsuarioDestinatario, conversa);
+                if (!retornoConversaRemetente) {
+                    Toast.makeText(
+                            ConversaActivity.this,
+                            "Problema ao salvar, tente novamente!",
+                            Toast.LENGTH_LONG
+                    ).show();
+                } else {
+                    // Salvar conversa para o Destinatario
 
-                    //salvar conversa para o Remetente
-
-                    Conversa conversa = new Conversa();
-                    conversa.setIdUsuario(idUsuarioDestinatario);
-                    conversa.setNome(nomeUsuarioDestinaratario);
-                    conversa.setMensagem(textoMensagem);
-                    Boolean retornoConversaRemetente = salvarConversa(idUsuarioRementente, idUsuarioDestinatario, conversa);
-                    if (!retornoConversaRemetente) {
+                    Conversa talk = new Conversa();
+                    talk.setIdUsuario(idUsuarioRementente);
+                    talk.setNome(nomeUsuarioRemetente);
+                    talk.setMensagem(textoMensagem);
+                    Boolean retornoConversaDestinatario = salvarConversar(idUsuarioDestinatario, idUsuarioRementente, talk);
+                    if (!retornoConversaDestinatario){
                         Toast.makeText(
                                 ConversaActivity.this,
-                                "Problema ao salvar conversa, tente novamente!",
+                                "Problema ao salvar conversa para o destinatario, tente novamente!",
                                 Toast.LENGTH_LONG
                         ).show();
-                    } else {
-
-                        //salvar conversa para o Destinatario
-
-                        conversa = new Conversa();
-                        conversa.setIdUsuario(idUsuarioRementente);
-                        conversa.setNome(nomeUsuarioRemetente);
-                        conversa.setMensagem(textoMensagem);
-                        Boolean retornoConversaDestinatario = salvarConversa(idUsuarioDestinatario,idUsuarioRementente,conversa);
-                        if (!retornoConversaDestinatario){
-                            Toast.makeText(
-                                    ConversaActivity.this,
-                                    "problema ao salvar conversa para o destinatário, tente novamente",
-                                    Toast.LENGTH_LONG
-                            ).show();
-                        }
-
-                    }
-                    editMensagem.setText("");
-
 
                 }
+
+                editMensagem.setText("");
             }
-        });
-    }
+
+        }
+    });
+}
 
     private boolean salvedMensagem(String idRementente, String idDestinatario, Mensagem mensagem) {
         try {
@@ -222,19 +219,20 @@ public class ConversaActivity extends AppCompatActivity {
 
     }
 
-    private Boolean salvarConversa(String idRementente, String idDestinatario, Conversa conversa) {
+    private boolean salvarConversar(String idRementente, String idDestinatario, Conversa conversa) {
+
         try {
 
             firebase = ConfiguracaoFirebase.getFirebase().child("conversas");
             firebase.child(idRementente)
                     .child(idDestinatario)
                     .setValue(conversa);
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+
     }
 
     @Override

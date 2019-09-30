@@ -34,14 +34,15 @@ import br.com.zupandroid.whatsappclone.model.Conversa;
 public class ConversasFragment extends Fragment {
 
     private ListView listView;
-    private ArrayList<Conversa> conversas;
     private ArrayAdapter<Conversa> adapter;
+    private ArrayList<Conversa> conversas;
 
     private DatabaseReference firebase;
     private ValueEventListener valueEventListenerConversas;
 
-    public ConversasFragment() {
 
+    public ConversasFragment() {
+        // Required empty public constructor
     }
 
 
@@ -49,19 +50,20 @@ public class ConversasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        conversas = new ArrayList<>();
         View view = inflater.inflate(R.layout.fragment_conversas, container, false);
-        listView = view.findViewById(R.id.listConversas);
+
+        // Monta listView e adapter;
+        conversas = new ArrayList<>();
+        listView = view.findViewById(R.id.id_Conversas);
         adapter = new ConversaAdapter(getActivity(), conversas);
         listView.setAdapter(adapter);
 
-        //recuperar daddos do usuario.
-
+        // recuperar dados do usuario
         Preferencias preferencias = new Preferencias(getActivity());
         String idUsuarioLogado = preferencias.getIdentificado();
 
 
-        //recuperar conversas do firebase.
+        // recuperar dados da mensagem
         firebase = ConfiguracaoFirebase.getFirebase()
                 .child("conversas")
                 .child(idUsuarioLogado);
@@ -69,9 +71,7 @@ public class ConversasFragment extends Fragment {
         valueEventListenerConversas = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 conversas.clear();
-
                 for (DataSnapshot dados : dataSnapshot.getChildren()) {
                     Conversa conversa = dados.getValue(Conversa.class);
                     conversas.add(conversa);
@@ -85,16 +85,21 @@ public class ConversasFragment extends Fragment {
             }
         };
 
+        // Adicionar evento de clique na lista
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), ConversaActivity.class);
+
 
                 Conversa conversa = conversas.get(position);
+                Intent intent = new Intent(getActivity(), ConversaActivity.class);
+
 
                 intent.putExtra("nome", conversa.getNome());
                 String email = Base64Custom.decodificadorBase64(conversa.getIdUsuario());
                 intent.putExtra("email", email);
+
                 startActivity(intent);
             }
         });
@@ -106,7 +111,7 @@ public class ConversasFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        firebase.addListenerForSingleValueEvent(valueEventListenerConversas);
+        firebase.addValueEventListener(valueEventListenerConversas);
     }
 
     @Override

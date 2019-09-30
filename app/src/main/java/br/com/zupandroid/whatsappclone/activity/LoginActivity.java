@@ -33,8 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private Usuario usuario;
     private FirebaseAuth autenticacao;
+    private DatabaseReference firebase;
     private ValueEventListener valueEventListenerUsuario;
-    private DatabaseReference firebaseReference;
     private String indentificadoUsuarioLogado;
 
 
@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         if (autenticacao.getCurrentUser() != null) {
             abriTelaPrincipal();
+
         }
 
     }
@@ -89,18 +90,16 @@ public class LoginActivity extends AppCompatActivity {
 
                     indentificadoUsuarioLogado = Base64Custom.codificarBase64(usuario.getEmail());
 
-                    firebaseReference = ConfiguracaoFirebase.getFirebase()
+                    firebase = ConfiguracaoFirebase.getFirebase()
                             .child("usuarios")
                             .child(indentificadoUsuarioLogado);
 
                     valueEventListenerUsuario = new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            Usuario usuarioRecuperado = dataSnapshot.getValue( Usuario.class);
-
+                             Usuario usuarioRecuperado = dataSnapshot.getValue(Usuario.class);
                             Preferencias preferencias = new Preferencias(LoginActivity.this);
-                            preferencias.salvarDados(indentificadoUsuarioLogado, usuarioRecuperado.getName());
+                            preferencias.salvarDados(indentificadoUsuarioLogado, usuarioRecuperado.getName() );
 
                         }
 
@@ -109,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         }
                     };
-                    firebaseReference.addListenerForSingleValueEvent(valueEventListenerUsuario);
+                    firebase.addListenerForSingleValueEvent(valueEventListenerUsuario);
 
 
                     abriTelaPrincipal();

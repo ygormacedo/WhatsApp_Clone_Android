@@ -6,7 +6,7 @@
     tools:context=".fragment.ConversasFragment">
 
   <ListView
-      android:id="@+id/listConversas"
+      android:id="@+id/id_Conversas"
       android:layout_marginTop="10dp"
       android:layout_marginBottom="10dp"
       android:layout_marginEnd="10dp"

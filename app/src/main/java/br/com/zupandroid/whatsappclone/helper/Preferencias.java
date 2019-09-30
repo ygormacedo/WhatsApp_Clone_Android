@@ -25,7 +25,7 @@ public class Preferencias<hashMap> {
     public void salvarDados(String identificadousuario, String nomeUsuario) {
 
         editor.putString(CHAVE_IDENTIFICADOR, identificadousuario);
-        editor.putString(CHAVE_IDENTIFICADOR, nomeUsuario);
+        editor.putString(CHAVE_NOME, nomeUsuario);
         editor.commit();
 
 
