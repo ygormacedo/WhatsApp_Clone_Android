@@ -1,10 +1,12 @@
 package br.com.zupandroid.whatsappclone.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -19,8 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import br.com.zupandroid.whatsappclone.R;
+import br.com.zupandroid.whatsappclone.activity.ConversaActivity;
 import br.com.zupandroid.whatsappclone.adapter.ConversaAdapter;
 import br.com.zupandroid.whatsappclone.config.ConfiguracaoFirebase;
+import br.com.zupandroid.whatsappclone.helper.Base64Custom;
 import br.com.zupandroid.whatsappclone.helper.Preferencias;
 import br.com.zupandroid.whatsappclone.model.Conversa;
 
@@ -68,7 +72,7 @@ public class ConversasFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 conversas.clear();
-                for (DataSnapshot dados: dataSnapshot.getChildren()){
+                for (DataSnapshot dados : dataSnapshot.getChildren()) {
                     Conversa conversa = dados.getValue(Conversa.class);
                     conversas.add(conversa);
                 }
@@ -81,6 +85,25 @@ public class ConversasFragment extends Fragment {
             }
         };
 
+        // Adicionar evento de clique na lista
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                Conversa conversa = conversas.get(position);
+                Intent intent = new Intent(getActivity(), ConversaActivity.class);
+
+
+                intent.putExtra("nome", conversa.getNome());
+                String email = Base64Custom.decodificadorBase64(conversa.getIdUsuario());
+                intent.putExtra("email", email);
+
+                startActivity(intent);
+            }
+        });
+
 
         return view;
     }
@@ -88,7 +111,7 @@ public class ConversasFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-    firebase.addValueEventListener(valueEventListenerConversas);
+        firebase.addValueEventListener(valueEventListenerConversas);
     }
 
     @Override
